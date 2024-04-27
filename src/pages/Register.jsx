@@ -5,6 +5,7 @@ import { ChangeAuth } from '../components/ChangeAuth';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
+import { toast } from 'react-toastify';
 
 export const Register = () => {
 
@@ -18,6 +19,7 @@ export const Register = () => {
     const user = await signup(data);
 
     if (user) {
+      toast.success('Register Successful')
       navigate('/profile');
     }
 

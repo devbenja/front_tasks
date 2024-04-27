@@ -1,5 +1,7 @@
-import { createContext, useState, useContext } from "react";
-import axios from "axios";
+import { createContext, useState, useContext, useEffect } from "react";
+import axios from "../api/axios";
+import Cookie from "js-cookie";
+
 
 const AuthContext = createContext();
 
@@ -23,14 +25,10 @@ export const AuthProvider = ({ children }) => {
 
         try {
 
-            const response = await axios.post('http://localhost:3000/api/v1/register', data, {
-                withCredentials: true
-            });
+            const response = await axios.post('/register', data);
 
             setUser(response.data);
             setIsAuth(true);
-
-            toast.success('LOG')
 
             return response.data;
 
@@ -48,9 +46,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (data) => {
 
         try {
-            const response = await axios.post('http://localhost:3000/api/v1/login', data, {
-                withCredentials: true
-            });
+            const response = await axios.post('/login', data);
 
             setUser(response.data);
             setIsAuth(true);
@@ -66,6 +62,23 @@ export const AuthProvider = ({ children }) => {
         }
 
     }
+
+    useEffect(() => {
+        if (Cookie.get('jwt_token')){
+
+            axios.get('/profile')
+            .then((response) => {
+                console.log(response.data)
+                setUser(response.data);
+                setIsAuth(true);
+            })
+            .catch((err) => {
+                toast.error(err);
+                setUser(null);
+                setIsAuth(false);
+            })
+        }
+    }, []);
 
     return (
         <AuthContext.Provider
