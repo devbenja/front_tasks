@@ -25,7 +25,7 @@ export const Login = () => {
   });
 
   return (
-    <Container>
+    <Container className="h-[calc(100vh-4rem)] flex items-center justify-center">
       <Card>
         {loginErrors && (
             loginErrors.map(err => (

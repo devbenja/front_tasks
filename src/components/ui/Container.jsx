@@ -1,9 +1,4 @@
-
-
-export const Container = ({children}) => {
-  return (
-    <div className='h-[calc(100vh-4rem)] flex items-center justify-center'>
-        {children}
-    </div>
-  )
+export const Container = ({ children, className }) => {
+    return <div className={"max-w-7xl px-4 mx-auto " + className}>{children}</div>;
 }
+

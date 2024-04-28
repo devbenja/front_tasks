@@ -7,7 +7,7 @@ export const Profile = () => {
   const { user } = useAuth();
 
   return (
-    <Container>
+    <Container className="h-[calc(100vh-4rem)] flex items-center justify-center">
       {user ? (
         <div className="flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl sm:px-12 bg-gray-900 text-gray-100">
           <img src={user.gravatar} alt="" className="w-32 h-32 mx-auto rounded-full bg-gray-500 aspect-square" />
