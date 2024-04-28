@@ -8,3 +8,5 @@ export { Button } from './Button.jsx';
 export { Input } from './Input.jsx';
 
 export { Container } from './Container.jsx';
+
+export { TextArea } from './TextArea.jsx';

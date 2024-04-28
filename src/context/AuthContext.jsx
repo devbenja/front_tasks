@@ -61,7 +61,14 @@ export const AuthProvider = ({ children }) => {
             setErrors([error.response.data.message]);
         }
 
-    }
+    };
+
+    const logout = async () => {
+        await axios.post("/logout");
+        setUser(null);
+        setIsAuth(false);
+    };
+    
 
     useEffect(() => {
         if (Cookie.get('jwt_token')){
@@ -82,7 +89,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ user, isAuth, errors, signup, login }}
+            value={{ user, isAuth, errors, signup, login, logout }}
         >
             {children}
         </AuthContext.Provider>
