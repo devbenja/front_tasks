@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "start": "serve dist -p $PORT",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -19,6 +20,7 @@
     "react-router-dom": "^6.22.3",
     "react-spinners": "^0.13.8",
     "react-toastify": "^10.0.5",
+    "serve": "^14.2.3",
     "sweetalert2": "^11.10.8",
     "sweetalert2-react-content": "^5.0.7"
   },
