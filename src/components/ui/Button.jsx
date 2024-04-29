@@ -1,9 +1,11 @@
+import { PiEyedropperSampleFill } from "react-icons/pi"
 
 
-export const Button = ({children}) => {
+export const Button = ({children, className, ...props}) => {
   return (
     <button 
-        className='rounded px-4 py-1 text-sm font-semibold text-white bg-green-600 w-full hover:bg-green-900 mt-2'
+        className={`text-sm font-semibold text-white mt-2 rounded-md ${className}`}
+        {...props}
     >
         {children}
     </button>

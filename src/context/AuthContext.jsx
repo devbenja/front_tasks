@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isAuth, setIsAuth] = useState(false);
     const [errors, setErrors] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const signup = async (data) => {
 
@@ -54,6 +55,7 @@ export const AuthProvider = ({ children }) => {
             return response.data;
 
         } catch (error) {
+
             if (Array.isArray(error.response.data)) {
                 return setErrors(error.response.data);
             }
@@ -68,28 +70,40 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         setIsAuth(false);
     };
-    
+
 
     useEffect(() => {
-        if (Cookie.get('jwt_token')){
+        setLoading(true);
+
+        if (Cookie.get('jwt_token')) {
 
             axios.get('/profile')
-            .then((response) => {
-                console.log(response.data)
-                setUser(response.data);
-                setIsAuth(true);
-            })
-            .catch((err) => {
-                toast.error(err);
-                setUser(null);
-                setIsAuth(false);
-            })
+                .then((response) => {
+                    console.log(response.data)
+                    setUser(response.data);
+                    setIsAuth(true);
+                })
+                .catch((err) => {
+                    toast.error(err);
+                    setUser(null);
+                    setIsAuth(false);
+                })
         }
+
+        setLoading(false);
     }, []);
+
+    useEffect(() => {
+        const clean = setTimeout(() => {
+            setErrors(null);
+        }, 3000);
+
+        return () => clearTimeout(clean);
+    }, [errors])
 
     return (
         <AuthContext.Provider
-            value={{ user, isAuth, errors, signup, login, logout }}
+            value={{ user, isAuth, errors, signup, login, logout, loading }}
         >
             {children}
         </AuthContext.Provider>

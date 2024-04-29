@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 
 import { Profile } from './pages/Profile.jsx';
 import { Login } from './pages/Login.jsx';
@@ -9,15 +9,21 @@ import { NotFound } from './pages/NotFound.jsx';
 
 import { NavBar } from './components/navbar/NavBar.jsx';
 
-import { AuthProvider } from './context/AuthContext.jsx';
+import { TaskProvider } from './context/TaskContext.jsx';
 
 import { PrivateRoute, PublicRoute } from './components/ProtectedRoute.jsx';
+
+import { useAuth } from './context/AuthContext.jsx';
 
 
 export const App = () => {
 
+  const { loading } = useAuth();
+
+  if (loading) return <h1>Loading</h1>
+
   return (
-    <AuthProvider>
+    <>
       <NavBar />
       <Routes>
         <Route element={<PublicRoute />}>
@@ -26,15 +32,18 @@ export const App = () => {
         </Route>
 
         <Route element={<PrivateRoute />}>
-          <Route path='/tasks' element={<Tasks />} />
+          <Route element={<TaskProvider><Outlet /></TaskProvider>}>
+            <Route path='/tasks' element={<Tasks />} />
+            <Route path='/create_task' element={<TaskForm />} />
+            <Route path='/task/:id/edit' element={<TaskForm />} />
+          </Route>
+
           <Route path='/profile' element={<Profile />} />
-          <Route path='/create_task' element={<TaskForm />} />
-          <Route path='/task/1/edit' element={<TaskForm />} />
         </Route>
 
         <Route path='*' element={<NotFound />} />
       </Routes>
-    </AuthProvider>
+    </>
 
   )
 }

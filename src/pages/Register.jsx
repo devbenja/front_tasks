@@ -62,7 +62,7 @@ export const Register = () => {
           />
           {errors.user_password && <p className="text-red-500">Password is required</p>}
 
-          <Button>Register</Button>
+          <Button className="px-4 py-1 bg-green-600 w-full hover:bg-green-900">Register</Button>
 
           <ChangeAuth text="Already have an account?" redirectTo="/login" textLink="Login" />
 
